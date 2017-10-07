@@ -1,0 +1,28 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/egor/Документы/ClientServerOS/Server/main.c
+sys/types.h
+-
+sys/socket.h
+-
+netinet/in.h
+-
+stdio.h
+-
+arpa/inet.h
+-
+string.h
+-
+pthread.h
+-
+stdlib.h
+-
+zconf.h
+-
+

@@ -25,14 +25,13 @@
       <file leaf-file-name="main.c" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="56" column="29" lean-forward="false" selection-start-line="56" selection-start-column="29" selection-end-line="56" selection-end-column="29" />
+            <state relative-caret-position="378">
+              <caret line="52" column="0" lean-forward="true" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
               <folding>
                 <element signature="e#255#364#0" expanded="false" />
                 <element signature="e#366#611#0" expanded="false" />
                 <element signature="e#613#781#0" expanded="false" />
                 <element signature="e#783#952#0" expanded="false" />
-                <element signature="e#954#1130#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -120,12 +119,12 @@
       <workItem from="1507315771272" duration="25230000" />
       <workItem from="1507397598624" duration="4000" />
       <workItem from="1507723391216" duration="179000" />
-      <workItem from="1507851857592" duration="9504000" />
+      <workItem from="1507851857592" duration="19506000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="37565000" />
+    <option name="totallyTimeSpent" value="47567000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1137" y="24" width="783" height="996" extended-state="0" />
@@ -193,7 +192,6 @@
             <element signature="e#366#611#0" expanded="false" />
             <element signature="e#613#781#0" expanded="false" />
             <element signature="e#783#952#0" expanded="false" />
-            <element signature="e#954#1130#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -207,7 +205,6 @@
             <element signature="e#366#611#0" expanded="false" />
             <element signature="e#613#781#0" expanded="false" />
             <element signature="e#783#952#0" expanded="false" />
-            <element signature="e#954#1130#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -221,7 +218,6 @@
             <element signature="e#366#611#0" expanded="false" />
             <element signature="e#613#781#0" expanded="false" />
             <element signature="e#783#952#0" expanded="false" />
-            <element signature="e#954#1130#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -235,14 +231,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="56" column="29" lean-forward="false" selection-start-line="56" selection-start-column="29" selection-end-line="56" selection-end-column="29" />
+        <state relative-caret-position="378">
+          <caret line="52" column="0" lean-forward="true" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
           <folding>
             <element signature="e#255#364#0" expanded="false" />
             <element signature="e#366#611#0" expanded="false" />
             <element signature="e#613#781#0" expanded="false" />
             <element signature="e#783#952#0" expanded="false" />
-            <element signature="e#954#1130#0" expanded="false" />
           </folding>
         </state>
       </provider>

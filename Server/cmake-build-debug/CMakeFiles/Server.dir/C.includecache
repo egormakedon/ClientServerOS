@@ -25,4 +25,6 @@ stdlib.h
 -
 zconf.h
 -
+signal.h
+-
 

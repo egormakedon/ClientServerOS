@@ -8,7 +8,7 @@
 #include <time.h>
 #include <string.h>
 
-#define BUFSIZE 32
+#define BUFSIZE 1024
 #define PORT 5223
 
 struct sockaddr_in addr;
@@ -19,31 +19,26 @@ void sleepFun(int num) {
         sleep(1);
     }
 }
-
 int setSocket(char *ip) {
     int sock = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
     memset(&addr, 0, sizeof(addr));
     addr.sin_family = AF_INET;
     addr.sin_addr.s_addr = inet_addr(ip);
     addr.sin_port = htons(PORT);
-
     return sock;
 }
-
 void setConnection(int sock) {
     connect(sock, (struct sockaddr *)&addr, sizeof(addr));
     printf("connection\n");
-    int num = 1 + rand() % 8;
+    int num = 2 + rand() % 10;
     sleepFun(num);
 }
-
 void sendMessage(int sock, char* message) {
     send(sock, message, strlen(message), 0);
     printf("send message\n");
-    int num = 1 + rand() % 8;
+    int num = 2 + rand() % 10;
     sleepFun(num);
 }
-
 void getMessage(int sock) {
     char buf[sizeof(BUFSIZE)];
     int byteRead = recv(sock, buf, BUFSIZE - 1, 0);
@@ -54,14 +49,16 @@ void getMessage(int sock) {
 int main () {
     srand(time(NULL));
 
-    char *ip = (char*) malloc(sizeof(char) * BUFSIZE);
-    fgets(ip, BUFSIZE, stdin);
+    char *ip = (char*) malloc(sizeof(char) * 20);
+    fgets(ip, 20, stdin);
     int sock = setSocket(ip);
     setConnection(sock);
+    free(ip);
 
-    char *message = (char*) malloc(sizeof(char) * BUFSIZE);
+    char* message = (char*) malloc(sizeof(char) * BUFSIZE);
     fgets(message, BUFSIZE, stdin);
     sendMessage(sock, message);
+    free(message);
 
     getMessage(sock);
 

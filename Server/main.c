@@ -11,8 +11,8 @@
 
 #define PORT 5223
 #define TRUE 1
-#define BUFSIZE 1024
-#define MESSAGE_SIZE 50
+#define BUFSIZE 2048
+#define MESSAGE_SIZE 100
 
 char** serverBuf;
 int serverBufIndex = 0;
@@ -28,8 +28,8 @@ struct client {
 void* idleFunc(void* thread) {
     pthread_t pthread_self = *(pthread_t*) thread;
     while(TRUE) {
-        timer();
         pthread_mutex_lock(&mutex);
+        sleep(1);
         serverBuf[serverBufIndex] = (char*) malloc(sizeof(char) * MESSAGE_SIZE);
         sprintf(serverBuf[serverBufIndex], "[%lu]: idle\n", pthread_self);
         serverBufIndex++;
@@ -66,17 +66,6 @@ void* clientFunc(void* ptr) {
 
     pthread_cancel(clientPtr->idleThread);
     close(clientPtr->clientSocket);
-
-
-    FILE* file = fopen("tmp/buf.txt", "w");
-    for (int index = 0; index < serverBufIndex; index++) {
-        fprintf(file, "%s", serverBuf[index]);
-        free(serverBuf[index]);
-    }
-    free(serverBuf);
-    fclose(file);
-    close(serverSocket);
-    exit(0);
 }
 
 void initServerSocket() {
@@ -99,11 +88,6 @@ void signal_handler() {
     fclose(file);
     close(serverSocket);
     exit(0);
-}
-
-void timer() {
-    time_t start = time(NULL);
-    while (time(NULL) - start < 1) {}
 }
 
 int main() {

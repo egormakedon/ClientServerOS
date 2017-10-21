@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/egor/Документы/ClientServerOS/Client/main.c
+/home/egor/Загрузки/ClientServerOS/Client/main.c
 sys/types.h
 -
 sys/socket.h

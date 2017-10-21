@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/egor/Документы/ClientServerOS/Server/main.c
+/home/egor/Загрузки/ClientServerOS/Server/main.c
 sys/types.h
 -
 sys/socket.h
@@ -17,8 +17,6 @@ stdio.h
 -
 arpa/inet.h
 -
-string.h
--
 pthread.h
 -
 stdlib.h
@@ -26,5 +24,7 @@ stdlib.h
 zconf.h
 -
 signal.h
+-
+string.h
 -
 

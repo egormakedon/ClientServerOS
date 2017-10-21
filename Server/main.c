@@ -3,21 +3,22 @@
 #include <netinet/in.h>
 #include <stdio.h>
 #include <arpa/inet.h>
-#include <string.h>
 #include <pthread.h>
 #include <stdlib.h>
 #include <zconf.h>
 #include <signal.h>
+#include <string.h>
 
-#define PORT 5223
+#define PORT 7123
 #define TRUE 1
-#define BUFSIZE 2048
-#define MESSAGE_SIZE 100
+#define FALSE 0
+#define BUFSIZE 500
 
 char** serverBuf;
 int serverBufIndex = 0;
 pthread_mutex_t mutex;
 int serverSocket;
+int checkKey;
 
 struct client {
     int clientSocket;
@@ -27,11 +28,13 @@ struct client {
 
 void* idleFunc(void* thread) {
     pthread_t pthread_self = *(pthread_t*) thread;
-    while(TRUE) {
-        pthread_mutex_lock(&mutex);
+    while(checkKey) {
         sleep(1);
-        serverBuf[serverBufIndex] = (char*) malloc(sizeof(char) * MESSAGE_SIZE);
+        if (!checkKey) break;
+        pthread_mutex_lock(&mutex);
+        serverBuf[serverBufIndex] = (char*) malloc(sizeof(char) * BUFSIZE);
         sprintf(serverBuf[serverBufIndex], "[%lu]: idle\n", pthread_self);
+        printf("[%lu]: idle\n", pthread_self);
         serverBufIndex++;
         pthread_mutex_unlock(&mutex);
     }
@@ -41,30 +44,32 @@ void* clientFunc(void* ptr) {
     struct client* clientPtr = (struct client*) ptr;
 
     pthread_mutex_lock(&mutex);
-    serverBuf[serverBufIndex] = (char*) malloc(sizeof(char) * MESSAGE_SIZE);
+    serverBuf[serverBufIndex] = (char*) malloc(sizeof(char) * BUFSIZE);
     sprintf(serverBuf[serverBufIndex], "[%lu]: accept new client %s\n", pthread_self(), inet_ntoa(clientPtr->clientAddr.sin_addr));
+    printf("[%lu]: accept new client %s\n", pthread_self(), inet_ntoa(clientPtr->clientAddr.sin_addr));
     serverBufIndex++;
     pthread_mutex_unlock(&mutex);
 
-    char buf[BUFSIZE];
-    int byteRead = (int) recv(clientPtr->clientSocket, buf, BUFSIZE, 0);
+    char buf[sizeof(BUFSIZE)];
+    int byteRead = recv(clientPtr->clientSocket, buf, BUFSIZE - 1, 0);
     buf[byteRead] = '\0';
 
     pthread_mutex_lock(&mutex);
     serverBuf[serverBufIndex] = (char*) malloc(sizeof(char) * strlen(buf));
     strcat(serverBuf[serverBufIndex], buf);
+    printf("%s", buf);
     serverBufIndex++;
     pthread_mutex_unlock(&mutex);
 
     send(clientPtr->clientSocket, buf, strlen(buf), 0);
 
     pthread_mutex_lock(&mutex);
-    serverBuf[serverBufIndex] = (char*) malloc(sizeof(char) * MESSAGE_SIZE);
+    checkKey = FALSE;
+    serverBuf[serverBufIndex] = (char*) malloc(sizeof(char) * BUFSIZE);
     sprintf(serverBuf[serverBufIndex], "[%lu]: client %s disconnected\n", pthread_self(), inet_ntoa(clientPtr->clientAddr.sin_addr));
+    printf("[%lu]: client %s disconnected\n", pthread_self(), inet_ntoa(clientPtr->clientAddr.sin_addr));
     serverBufIndex++;
     pthread_mutex_unlock(&mutex);
-
-    pthread_cancel(clientPtr->idleThread);
     close(clientPtr->clientSocket);
 }
 
@@ -110,6 +115,7 @@ int main() {
         clientPtr.clientAddr = clientAddr;
         clientPtr.idleThread = idleThread;
 
+        checkKey = TRUE;
         pthread_create(&clientPthread, NULL, clientFunc, &clientPtr);
         pthread_create(&idleThread, NULL, idleFunc, &clientPthread);
     }

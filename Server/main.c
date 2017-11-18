@@ -78,9 +78,9 @@ void initServerSocket() {
     serverSocket = socket(AF_INET, SOCK_STREAM, 0);
     addr.sin_family = AF_INET;
     addr.sin_port = htons(PORT);
-    addr.sin_addr.s_addr = inet_addr("127.0.0.1");
+    addr.sin_addr.s_addr = inet_addr("172.20.10.8");
     bind(serverSocket, (struct sockaddr *)&addr, sizeof(addr));
-    listen(serverSocket, 1);
+    listen(serverSocket, 10);
 }
 
 void signal_handler() {
